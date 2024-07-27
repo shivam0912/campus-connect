@@ -1,0 +1,358 @@
+
+
+img{
+    /* padding:1rem; */
+    margin: auto;
+    width:200px;
+    height:220px;
+}
+.logo-img{
+  margin: auto;
+  width:50px;
+  height:50px;
+}
+
+
+body{
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 800;
+  background: #17ebcf36;
+
+}
+.name-label{
+    /* border:2px solid red; */
+    background: cadetblue;
+    display: inline;
+    padding:0.5rem;
+    color:white;
+    border-radius: 6px;
+} 
+h3{
+margin-top: 15px;}
+
+a:-webkit-any-link {
+    text-decoration: none;
+    color: inherit;
+  }
+
+  main{
+    min-height: 81vh;
+  }
+
+ 
+
+  .imagehover:hover{
+  
+    cursor:pointer;
+  }
+
+
+.carousel img {
+  height: 350px;
+  padding: 3px;
+  /* margin: 4px; */
+  /* border-radius: 50%; */
+  margin-left: auto;
+  margin-right: auto;
+}
+  .imagehover{
+    /* width:100%; */
+    /* height:100%; */
+    border: 1px solid black;
+  }
+  .description{
+    /* border:0.5px solid black; */
+    max-height:300px;
+    /* margin:auto */
+    margin-top: 10px;
+   
+  }
+  .logo-button {
+    background: none;
+    border: none;
+    padding: 2px 5px;
+    
+    cursor: pointer;
+  }
+  
+  .logo-img1 {
+    width: 40px; /* Adjust the width and height as needed */
+    height: 40px;
+    background-color: white;
+  }
+  
+
+  .description p{
+    line-height: 2
+    ;
+  }
+
+  .space{
+margin-left: 1.5rem;
+/* text-align: center;   */
+/* border:2px solid red; */
+/* width:100px; */
+/* margin:auto; */
+  }
+li{
+  list-style: none;
+  margin-bottom: 3px;
+}
+
+.borderaround{
+  
+  border:1px solid rgb(190, 190, 211);
+  max-height: 500px;
+  /* margin:0.1rem; */
+  margin-top: 1rem;
+  overflow: hidden;
+  /* width:200px; */
+}
+.details{
+ padding: 0.3rem;
+  background: rgb(13, 122, 150);
+  margin-left: -15px;
+  margin-right: -16px;
+  color:white;
+  /* min-height: 1000px; */
+}
+.setheight{
+  max-height: 160px;
+}
+
+@media screen and (max-width: 700px) {
+  .setheight{
+    max-height: 400px;
+  }
+}
+.fa-info{
+  color:rgb(197, 184, 0);
+  /* padding:1rem; */
+  /* scale: 1.2; */
+  margin-right: 1rem;
+}
+
+
+.fa-mobile-alt{
+  color:green;
+margin-right: 0.2rem;
+  /* padding:1rem; */
+}
+
+.product ul li{
+  margin-left: -50px;
+}
+
+.underlined{
+  text-decoration: underline;
+}
+.fa-times{
+  margin-right: 0.2rem;
+  color:red;
+}
+
+.underlined1 span{
+  
+  /* border: 2px solid red; */
+  padding: 0.5rem 0.5rem;
+  /* background: rgb(29, 60, 160); */
+  /* color: white; */
+  margin-left: 5px;
+border-radius: 5px;
+color:white;
+}
+
+.formAround{
+  border:1px solid rgb(137, 155, 130);
+  /* border-radius:2px; */
+}
+
+.marginshift li{
+  margin-left: -40px;
+}
+
+.text-area{
+  /* border: 2px solid red; */
+  background: rgb(209, 74, 178);
+}
+.text-area1{
+  margin:0px -15px;
+  background: rgb(13, 122, 150);
+  color:rgb(229, 226, 226);
+  padding-left: 15px;
+  /* padding-bottom:1px; */
+  margin-bottom: 3px;
+  /* border: 2px solid red; */
+}
+.text-area3{
+  /* margin-bottom: 100px; */
+  /* border: 2px solid red; */
+  padding-bottom: 3px;
+}
+
+.button{
+  margin:20px auto;
+  width:20%;
+  display: block;
+  border:none;
+  border-radius: 5px;
+  padding:5px;
+  color:white;
+  background: rgb(94, 143, 39);
+
+
+}
+
+.emailbutton{
+  border-radius: 5px;
+  border:none;
+  margin-left: 2px;
+}
+
+
+.far{
+  
+  margin:auto;
+  
+  color:red;
+ 
+}
+.cross{
+  display: flex;
+ 
+
+
+}
+.fa-window-close{
+ 
+  font-size: 1.4rem;
+
+}
+
+.cancel{
+  border:none;
+  background: none;
+}
+
+.form-control{
+  /* border:2px solid red; */
+  font-weight: 700;
+
+}
+.review{
+  font-style: italic;
+margin-left: 12px;
+font-size: 11px;
+}
+.comment{
+  font-size: 13px;
+  margin-left: 5px;
+}
+
+.textcolor{
+  color:white;
+  /* background: red; */
+}
+
+.paginate{
+
+  justify-content: center;
+}
+
+.slanted{
+  font-style: italic;
+}
+
+.fa-phone{
+  /* border: 2px solid red; */
+  padding:1rem;
+  padding-bottom: 0.5rem;
+  color:green;
+  font-size: 15px;
+
+}
+.fa-envelope-square{
+  color:red;
+  padding:1rem;
+  padding-bottom: 0.5rem;
+  font-size: 15px;
+
+}
+
+.more-info{
+  /* padding:1rem; */
+  /* border:2px solid red; */
+  margin-right: .5rem;
+  margin-left: .9rem;
+  
+}
+
+.aboutpage{
+  border:2px solid rgb(0, 223, 11);
+  border-bottom: none;
+  border-radius: 10px;
+  background: rgb(216, 216, 190);
+  /* color:white; */
+}
+
+.aboutpage1{
+  border:2px solid rgb(0, 223, 11);
+  border-radius: 10px;
+  background: rgb(216, 216, 190);
+  /* color:white; */
+
+
+
+}
+
+
+
+.aboutbody p{
+  line-height: 20px;
+
+
+}
+
+.docenter{
+  margin-top: 3rem;
+  /* border:2px solid rgb(0, 223, 11); */
+  justify-content: center;
+
+
+}
+
+.product-card{
+  background-color:#f5f2f29d ;
+  
+}
+/* Add custom CSS for SearchBox component */
+.SearchBox {
+  position: relative; 
+  background-color: transparent;/* Ensure relative positioning */
+}
+
+.SearchBox .autocomplete-list {
+  position: absolute; /* Position autocomplete list absolutely */
+  z-index: 1000; /* Ensure the autocomplete list appears above other elements */
+  background-color: rgb(0, 0, 0); /* Set background color for the autocomplete list */
+  border: 1px solid #000000; /* Add border to the autocomplete list */
+  border-radius: 4px; /* Add border-radius to the autocomplete list */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Add box shadow for a subtle effect */
+  width: 100%; /* Set the width of the autocomplete list */
+  max-height: 200px; /* Set maximum height for the autocomplete list */
+  overflow-y: auto; /* Enable vertical scrolling if needed */
+}
+
+.SearchBox .autocomplete-item {
+  padding: 8px 12px; /* Add padding to each autocomplete item */
+  cursor: pointer; /* Set cursor to pointer for clickable items */
+}
+
+.SearchBox .autocomplete-item:hover {
+  background-color: #02080e00; /* Set background color when hovering over autocomplete items */
+}
+
+/* Ensure search box input doesn't change background color on hover */
+.SearchBox .form-control:hover {
+  background-color: transparent !important; /* Ensure search box input background remains transparent */
+}

@@ -1,0 +1,101 @@
+/* Add this CSS to your existing stylesheet or create a new one */
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+  
+  .container Form {
+    width: 80%;
+  }
+  
+  .container h1 {
+    text-align: center;
+    margin-bottom: 30px;
+  }
+  
+  .container .mt-2 {
+    margin-top: 10px;
+  }
+  
+  .container .mb-5 {
+    margin-bottom: 30px;
+  }
+  
+  .container [type="submit"] {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .container [type="submit"]:hover {
+    background-color: #0056b3;
+  }
+  
+  .container .small-text {
+    font-size: 0.8rem;
+    color: #666;
+  }
+  
+  .container .form-group input[type="text"],
+  .container .form-group input[type="number"],
+  .container .form-group input[type="date"],
+  .container .form-group textarea,
+  .container .form-group select {
+    width: 100%;
+    padding: 10px;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    margin-top: 5px;
+  }
+  
+  .container .form-group select {
+    appearance: none;
+  }
+  
+  .container .form-group textarea {
+    resize: vertical;
+  }
+  
+  .container .form-group label {
+    margin-bottom: 5px;
+    display: block;
+  }
+  
+  .container .form-group .custom-file-input {
+    cursor: pointer;
+  }
+  
+  .container .form-group .custom-file-input:invalid ~ .custom-file-label {
+    color: #999;
+  }
+  
+  .container .form-group .custom-file-input:valid ~ .custom-file-label {
+    color: #007bff;
+  }
+  
+  .container .form-group .custom-file-label {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    padding: 0.5rem 1rem;
+  }
+  
+  .container .form-group .custom-file-label::after {
+    content: "Choose File";
+  }
+  
+  .container .form-group .custom-file-label span {
+    display: inline-block;
+    width: 100%;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+  
