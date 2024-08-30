@@ -16,7 +16,9 @@ const app = express();
 
 // Configure CORS
 app.use(cors({
-  origin: process.env.FRONTEND_URL || '*', // Use environment variable for frontend URL or default to '*'
+  origin: process.env.FRONTEND_URL || '*', // Adjust as necessary
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  credentials: true,
 }));
 
 app.use(express.json());
