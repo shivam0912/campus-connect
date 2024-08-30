@@ -31,6 +31,9 @@ import {
   USER_VERIFICATION_LINK_RESET,
 } from '../types/userConstants'
 
+// Base URL for API calls
+const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000';
+
 export const login = (email, password) => async (dispatch) => {
   try {
     dispatch({
@@ -42,7 +45,7 @@ export const login = (email, password) => async (dispatch) => {
       },
     }
     const { data } = await axios.post(
-      '/api/users/login',
+      `${API_URL}/api/users/login`,
       { email, password },
       config
     )
@@ -63,8 +66,7 @@ export const login = (email, password) => async (dispatch) => {
   }
 }
 
-//for logout
-
+// Logout action
 export const logout = () => (dispatch) => {
   localStorage.removeItem('userData')
   dispatch({
@@ -84,7 +86,7 @@ export const logout = () => (dispatch) => {
   })
 }
 
-//register users
+// Verify user
 export const verify = (name, email, password, phone_no, address) => async (
   dispatch
 ) => {
@@ -97,10 +99,8 @@ export const verify = (name, email, password, phone_no, address) => async (
         'Content-Type': 'application/json',
       },
     }
-    // console.log(phone_no)
-
     const { data } = await axios.post(
-      '/api/users/verificationlink',
+      `${API_URL}/api/users/verificationlink`,
       { name, email, password, contact: { phone_no }, address },
       config
     )
@@ -118,8 +118,8 @@ export const verify = (name, email, password, phone_no, address) => async (
     })
   }
 }
-//user register
 
+// Register user
 export const register = (token) => async (dispatch) => {
   try {
     dispatch({
@@ -132,7 +132,7 @@ export const register = (token) => async (dispatch) => {
       },
     }
 
-    const { data } = await axios.post('/api/users', { token }, config)
+    const { data } = await axios.post(`${API_URL}/api/users`, { token }, config)
 
     dispatch({
       type: USER_REGISTER_SUCCESS,
@@ -156,8 +156,7 @@ export const register = (token) => async (dispatch) => {
   }
 }
 
-//EMAIL SEND
-
+// Send email
 export const sendEmail = (
   receiver,
   text,
@@ -182,11 +181,10 @@ export const sendEmail = (
     }
 
     const { data } = await axios.post(
-      '/api/users/email',
+      `${API_URL}/api/users/email`,
       { receiver, text, name, address, productName, email, phone_no },
       config
     )
-    console.log(data)
     dispatch({
       type: EMAIL_SEND_SUCCESS,
       payload: data,
@@ -202,7 +200,7 @@ export const sendEmail = (
   }
 }
 
-//get all users by an  admin
+// List all users
 export const listUsers = () => async (dispatch, getState) => {
   try {
     dispatch({
@@ -218,8 +216,7 @@ export const listUsers = () => async (dispatch, getState) => {
     }
 
     const { data } = await axios.get(
-      '/api/users',
-
+      `${API_URL}/api/users`,
       config
     )
     dispatch({
@@ -237,8 +234,7 @@ export const listUsers = () => async (dispatch, getState) => {
   }
 }
 
-//delete user by an admin
-
+// Delete user
 export const deleteUser = (id) => async (dispatch, getState) => {
   try {
     dispatch({
@@ -254,8 +250,7 @@ export const deleteUser = (id) => async (dispatch, getState) => {
     }
 
     await axios.delete(
-      `/api/users/${id}`,
-
+      `${API_URL}/api/users/${id}`,
       config
     )
     dispatch({
@@ -272,8 +267,7 @@ export const deleteUser = (id) => async (dispatch, getState) => {
   }
 }
 
-//user update
-
+// Update user
 export const updateUser = (user) => async (dispatch, getState) => {
   try {
     dispatch({
@@ -285,13 +279,10 @@ export const updateUser = (user) => async (dispatch, getState) => {
     const config = {
       headers: {
         'Content-Type': 'application/json',
-
         Authorization: `Bearer ${userData.token}`,
       },
     }
-    console.log(config)
-    // console.log(id)
-    const { data } = await axios.put(`/api/users/${user._id}`, user, config)
+    const { data } = await axios.put(`${API_URL}/api/users/${user._id}`, user, config)
     dispatch({
       type: USER_UPDATE_SUCCESS,
       payload: data,
@@ -307,8 +298,7 @@ export const updateUser = (user) => async (dispatch, getState) => {
   }
 }
 
-//get user details
-
+// Get user details
 export const getUserDetails = (id) => async (dispatch, getState) => {
   try {
     dispatch({
@@ -325,7 +315,7 @@ export const getUserDetails = (id) => async (dispatch, getState) => {
       },
     }
 
-    const { data } = await axios.get(`/api/users/${id}`, config)
+    const { data } = await axios.get(`${API_URL}/api/users/${id}`, config)
 
     dispatch({
       type: USER_DETAILS_SUCCESS,
