@@ -37,7 +37,7 @@ const __dirname = path.resolve();
 app.use('/uploads', express.static(path.join(__dirname, '/uploads')));
 
 // Serve frontend build only in production
-if (process.env.NODE_ENV === 'production') {
+if (process.env.NODE_ENV === 'productio') {
   // Do not serve frontend files here if you're deploying frontend separately
 } else {
   app.get('/', (req, res) => {
