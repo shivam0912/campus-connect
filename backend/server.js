@@ -42,14 +42,20 @@ app.get('/api/config/cloudinarypreset', (req, res) => {
 const __dirname = path.resolve();
 app.use('/uploads', express.static(path.join(__dirname, '/uploads')));
 
-// Serve frontend build only in production
 if (process.env.NODE_ENV === 'production') {
+  // Serve static assets from the frontend build directory
+  app.use(express.static(path.join(__dirname, 'frontend/build')));
   
+  // Serve index.html file for all unhandled routes
+  app.get('*', (req, res) => {
+    res.sendFile(path.resolve(__dirname, 'frontend', 'build', 'index.html'));
+  });
 } else {
   app.get('/', (req, res) => {
-    res.send('API is running...');
+    res.send('API is running in development mode...');
   });
 }
+
 
 // Error handling middleware
 app.use((err, req, res, next) => {
