@@ -16,10 +16,11 @@ const app = express();
 
 // Configure CORS
 app.use(cors({
-  origin: process.env.FRONTEND_URL || 'http://localhost:3000', // Adjust as necessary
+  origin: ['https://campus-connect-8pea.vercel.app', 'https://campus-connect-eta.vercel.app'],
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   credentials: true,
 }));
+
 
 app.use(express.json());
 
