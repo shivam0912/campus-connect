@@ -15,15 +15,12 @@ connectDB();
 const app = express();
 
 // Configure CORS
-app.use((req, res, next) => {
-  res.setHeader('Access-Control-Allow-Origin', 'https://campus-connect-8pea.vercel.app');
-  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
-  res.setHeader('Access-Control-Allow-Credentials', 'true');
-  next();
-});
-
-
+app.use(cors({
+  origin: ['https://campus-connect-8pea.vercel.app', 'https://campus-connect-eta.vercel.app'],
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+  credentials: true,
+}));
 
 app.use(express.json());
 
@@ -46,7 +43,7 @@ if (process.env.NODE_ENV === 'production') {
   // Serve static assets from the frontend build directory
   app.use(express.static(path.join(__dirname, 'frontend/build')));
   
-  // Serve index.html file for all unhandled routes
+  // Serve index.html for all unhandled routes
   app.get('*', (req, res) => {
     res.sendFile(path.resolve(__dirname, 'frontend', 'build', 'index.html'));
   });
@@ -56,17 +53,15 @@ if (process.env.NODE_ENV === 'production') {
   });
 }
 
-
 // Error handling middleware
 app.use((err, req, res, next) => {
-  console.error(err.stack);  // Logs detailed error stack trace in the console
+  console.error(err.stack);  // Log error stack trace
   const statusCode = res.statusCode === 200 ? 500 : res.statusCode;
   res.status(statusCode).json({
     message: err.message,
     error: process.env.NODE_ENV === 'production' ? null : err.stack,
   });
 });
-
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Server is running on port ${PORT}`));
