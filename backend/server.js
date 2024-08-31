@@ -39,19 +39,10 @@ app.get('/api/config/cloudinarypreset', (req, res) => {
 const __dirname = path.resolve();
 app.use('/uploads', express.static(path.join(__dirname, '/uploads')));
 
-if (process.env.NODE_ENV === 'production') {
-  // Serve static assets from the frontend build directory
-  app.use(express.static(path.join(__dirname, 'frontend/build')));
-  
-  // Serve index.html for all unhandled routes
-  app.get('*', (req, res) => {
-    res.sendFile(path.resolve(__dirname, 'frontend', 'build', 'index.html'));
-  });
-} else {
-  app.get('/', (req, res) => {
-    res.send('API is running in development mode...');
-  });
-}
+// Remove the production block since frontend is deployed separately
+app.get('/', (req, res) => {
+  res.send('API is running...');
+});
 
 // Error handling middleware
 app.use((err, req, res, next) => {
