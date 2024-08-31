@@ -15,11 +15,14 @@ connectDB();
 const app = express();
 
 // Configure CORS
-app.use(cors({
-  origin: ['https://campus-connect-8pea.vercel.app', 'https://campus-connect-eta.vercel.app'],
-  methods: ['GET', 'POST', 'PUT', 'DELETE'],
-  credentials: true,
-}));
+app.use((req, res, next) => {
+  res.setHeader('Access-Control-Allow-Origin', 'https://campus-connect-8pea.vercel.app');
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+  res.setHeader('Access-Control-Allow-Credentials', 'true');
+  next();
+});
+
 
 
 app.use(express.json());
@@ -40,7 +43,7 @@ const __dirname = path.resolve();
 app.use('/uploads', express.static(path.join(__dirname, '/uploads')));
 
 // Serve frontend build only in production
-if (process.env.NODE_ENV === 'productio') {
+if (process.env.NODE_ENV === 'production') {
   // Do not serve frontend files here if you're deploying frontend separately
 } else {
   app.get('/', (req, res) => {
@@ -53,7 +56,7 @@ app.use((err, req, res, next) => {
   const statusCode = res.statusCode === 200 ? 500 : res.statusCode;
   res.status(statusCode).json({
     message: err.message,
-    stack: process.env.NODE_ENV === 'productio' ? null : err.stack,
+    stack: process.env.NODE_ENV === 'production' ? null : err.stack,
   });
 });
 
