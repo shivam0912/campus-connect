@@ -1,6 +1,6 @@
 {
   "name": "frontend",
-  "proxy": "https://campus-connect-eta.vercel.app/",
+  
   "version": "0.1.0",
   "private": true,
   "dependencies": {

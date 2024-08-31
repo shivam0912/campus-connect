@@ -16,7 +16,7 @@ const app = express();
 
 // Configure CORS
 app.use(cors({
-  origin: process.env.FRONTEND_URL || '*', // Adjust as necessary
+  origin: process.env.FRONTEND_URL || 'http://localhost:3000', // Adjust as necessary
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   credentials: true,
 }));
