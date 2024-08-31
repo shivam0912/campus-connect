@@ -44,7 +44,7 @@ app.use('/uploads', express.static(path.join(__dirname, '/uploads')));
 
 // Serve frontend build only in production
 if (process.env.NODE_ENV === 'production') {
-  // Do not serve frontend files here if you're deploying frontend separately
+  
 } else {
   app.get('/', (req, res) => {
     res.send('API is running...');
@@ -53,12 +53,14 @@ if (process.env.NODE_ENV === 'production') {
 
 // Error handling middleware
 app.use((err, req, res, next) => {
+  console.error(err.stack);  // Logs detailed error stack trace in the console
   const statusCode = res.statusCode === 200 ? 500 : res.statusCode;
   res.status(statusCode).json({
     message: err.message,
-    stack: process.env.NODE_ENV === 'production' ? null : err.stack,
+    error: process.env.NODE_ENV === 'production' ? null : err.stack,
   });
 });
+
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Server is running on port ${PORT}`));
