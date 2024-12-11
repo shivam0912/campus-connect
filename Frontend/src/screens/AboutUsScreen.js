@@ -25,7 +25,7 @@ const AboutUsScreen = () => {
           <h1 className='section-title'>Developer</h1>
           <p className='section-content'>
             Designed and developed by <br />
-            <strong>Shivam Gupta</strong>
+            <strong>Shivam Gupta, Karthik Kumawat, Anmol Raykhare, Swastik Rastogi</strong>
           </p>
           <h3 className='contact-title'>Contact Details</h3>
           <p className='contact-info'>
