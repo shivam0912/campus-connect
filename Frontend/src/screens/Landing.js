@@ -47,14 +47,7 @@ const Landing = ({  match }) => {
             
           </LinkContainer>
         </Col>
-        <Col className='text-right'>
-          <LinkContainer to={userData ? '/predictprice' : '/login'}>
-            <Button className='btn-primary  '>
-              <span className='textcolor'>Want Bike Price Prediction??</span>
-            </Button>
-           
-          </LinkContainer>
-        </Col>
+      
       </Row>
       {loading ? (
         <Loader />
