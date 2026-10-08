@@ -125,6 +125,6 @@ For a fresh local database, set `MONGO_URI` and run `npm run data:demo --prefix 
 - Request bodies are size-limited and production errors omit stack traces.
 - Production dependency audits currently report no known vulnerabilities for the backend dependency set.
 
-## Authors
+## Developer
 
-Shivam Gupta, Karthik Kumawat, Anmol Raykhare, and Swastik Rastogi.
+Designed and developed by **Shivam Gupta**.
