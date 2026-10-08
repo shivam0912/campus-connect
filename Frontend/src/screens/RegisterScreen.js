@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { Spinner, Form, Button } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import Message from '../components/Message';
 import { verify } from '../actions/userActions';

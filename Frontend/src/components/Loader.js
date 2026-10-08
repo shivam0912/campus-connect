@@ -8,7 +8,6 @@ const Loader = () => {
       variant='danger'
       style={{
         width: '100px',
-        margin: 'auto',
         height: '100px',
         margin: 'auto',
         marginTop: '100px',

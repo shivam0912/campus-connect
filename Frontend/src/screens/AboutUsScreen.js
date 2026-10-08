@@ -31,7 +31,7 @@ const AboutUsScreen = () => {
           <p className='contact-info'>
             <i className='fas fa-phone'></i> 8840748023 <br />
             <i className='fas fa-envelope-square'></i>{' '}
-            <a target='_blank' href='mailto:campus.connect@gmail.com'>campus.connect@gmail.com</a>
+            <a target='_blank' rel='noreferrer' href='mailto:campus.connect@gmail.com'>campus.connect@gmail.com</a>
           </p>
         </Col>
         <Col md={3}></Col>

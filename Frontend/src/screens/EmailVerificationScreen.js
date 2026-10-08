@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { Row, Col, Button, Form } from 'react-bootstrap'
+import { Row, Col } from 'react-bootstrap'
 import { register } from '../actions/userActions'
 import Message from '../components/Message'
 import Loader from '../components/Loader'
@@ -16,7 +16,7 @@ const EmailVerificationScreen = ({ location, match, history }) => {
       history.push(redirect)
     }
     dispatch(register(token))
-  }, [history, userData, redirect, token])
+  }, [dispatch, history, userData, redirect, token])
 
   return (
     <Row>

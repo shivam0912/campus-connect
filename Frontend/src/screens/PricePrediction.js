@@ -6,6 +6,7 @@ function PricePrediction() {
      
       {/* Embed Flask app using an iframe */}
       <iframe
+        title="Price prediction tool"
         src="http://localhost:5001/"
         style={{
           width: '100%',

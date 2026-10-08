@@ -1,12 +1,12 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import { Row, Col, Button, Form } from 'react-bootstrap'
+import { Row, Col } from 'react-bootstrap'
 
 const NotFoundScreen = () => {
   return (
     <>
       <Row>
-        <img src='https://i.imgur.com/lKJiT77.png' />
+        <img src='https://i.imgur.com/lKJiT77.png' alt='A dog beside a missing-page message' />
       </Row>
       <Row>
         <Col md={3}></Col>

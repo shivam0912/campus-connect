@@ -36,11 +36,6 @@ const ProductListScreen = ({ history, match }) => {
     }
   }
 
-  const searchHandler = (keyword) => {
-    // Dispatch an action to fetch products based on the keyword
-    dispatch(listProducts(keyword, pageNumber))
-  }
-
   return (
     <div style={{ backgroundColor: '#ffffff', padding: '20px' }}>
       <h1>Products</h1>
