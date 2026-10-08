@@ -16,20 +16,19 @@ const Header = () => {
   }
   
   return (
-    <header>
-      <Navbar bg='dark' variant='dark' expand='lg' collapseOnSelect>
+    <header className='site-header'>
+      <Navbar className='modern-nav' variant='dark' expand='lg' collapseOnSelect>
         <Container>
           <LinkContainer to='/'>
           
-            <Navbar.Brand>
+            <Navbar.Brand className='brand-lockup'>
             <img
-              src={logo} // Path to your logo image file
-              alt='Campus Hub Logo' // Alt text for accessibility
-              height='10' // Adjust height as needed
-              width='10'
-              className='d-inline-block align-top mr-1 logo-img' // Add custom styles if needed
+              src={logo}
+              alt='Campus Connect logo'
+              className='logo-img'
             />
-              Campus Connect</Navbar.Brand>
+              <span>Campus Connect</span>
+            </Navbar.Brand>
           </LinkContainer>
           <Navbar.Toggle aria-controls='basic-navbar-nav' />
 
@@ -51,7 +50,7 @@ const Header = () => {
                 </NavDropdown>
               ) : (
                 <LinkContainer to='/login'>
-                  <Nav.Link>
+                  <Nav.Link className='nav-sign-in'>
                     <i className='fas fa-user'></i> Sign In
                   </Nav.Link>
                 </LinkContainer>
@@ -72,7 +71,7 @@ const Header = () => {
               <LinkContainer to='/about'>
                 <Nav.Link>
                   {/* <i className='far fa-address-card'></i>  */}
-                  About Us
+                  About
                 </Nav.Link>
               </LinkContainer>
             </Nav>

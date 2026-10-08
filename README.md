@@ -26,7 +26,8 @@ The frontend and backend are separate Vercel projects connected to the same GitH
 - Admin views for users and products
 - Protected seller contact information
 - Health endpoint and graceful database error handling
-- Responsive React Bootstrap interface
+- Modern responsive marketplace interface
+- Idempotent fictional demo catalog for portfolio presentation
 
 ## Technology
 
@@ -80,6 +81,7 @@ npm start                    # start only the API
 npm run server               # API with nodemon
 npm run client               # start only the React app
 npm run build --prefix Frontend
+npm run data:demo --prefix backend  # add or refresh the fictional demo catalog
 npm audit --omit=dev
 npm audit --omit=dev --prefix backend
 ```
@@ -110,6 +112,10 @@ Required production variables:
 
 Never commit `.env` files or production credentials. Use Vercel environment variables and a restricted MongoDB database user.
 
+### Demo catalog
+
+For a fresh local database, set `MONGO_URI` and run `npm run data:demo --prefix backend`. The command safely upserts six clearly fictional campus listings and a dedicated demo seller; it does not delete existing records and can be run more than once.
+
 ## Security notes
 
 - Passwords are hashed with bcrypt.
@@ -122,4 +128,3 @@ Never commit `.env` files or production credentials. Use Vercel environment vari
 ## Authors
 
 Shivam Gupta, Karthik Kumawat, Anmol Raykhare, and Swastik Rastogi.
-

@@ -1,25 +1,23 @@
 import React from 'react';
-import { Container, Row, Col } from 'react-bootstrap';
+import { Container } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 
 const Footer = () => {
   return (
-    <footer style={footerStyle}>
-      <Container>
-        <Row>
-          <Col className='text-center py-3'>
-            Copyright &copy; 2024
-          </Col>
-        </Row>
+    <footer className='site-footer'>
+      <Container className='footer-inner'>
+        <div>
+          <strong>Campus Connect</strong>
+          <p>Useful things, kept in circulation.</p>
+        </div>
+        <div className='footer-links'>
+          <Link to='/about'>About</Link>
+          <a href='https://github.com/shivam0912/campus-connect' target='_blank' rel='noreferrer'>GitHub</a>
+          <span>&copy; {new Date().getFullYear()}</span>
+        </div>
       </Container>
     </footer>
   );
-};
-
-const footerStyle = {
-  backgroundColor: 'rgba(0, 0, 0, 0.2)',
-  position: 'relative',
-  bottom: 0,
-  width: '100%',
 };
 
 export default Footer;

@@ -15,20 +15,19 @@ const SearchBox = ({ history }) => {
   }
 
   return (
-    <div className="SearchBox"> {/* Apply the SearchBox CSS class */}
-      <Form onSubmit={submitHandler} inline>
+    <div className="SearchBox">
+      <Form onSubmit={submitHandler} inline className='search-form'>
         <Form.Control
           type='text'
           name='q'
           onChange={(e) => setKeyword(e.target.value)}
-          placeholder='Search Products...'
-          className='mr-sm-2 ml-sm-5'
+          placeholder='Search campus items'
+          className='search-input'
         ></Form.Control>
-        <Button type='submit' variant='outline-success' className='p-2'>
-          Search
+        <Button type='submit' className='search-button' aria-label='Search products'>
+          <i className='fas fa-search'></i>
         </Button>
       </Form>
-      {/* Autocomplete list goes here */}
     </div>
   )
 }

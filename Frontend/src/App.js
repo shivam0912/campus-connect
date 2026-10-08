@@ -24,8 +24,8 @@ const App = () => {
     <Router>
       <div className="App">
         <Header />
-        <main className="py-5">
-          <Container>
+        <main className="app-main">
+          <Container className="app-container">
             <Switch>
               <Route path="/" component={Landing} exact />
               <Route path="/search/:keyword" component={Landing} exact />
