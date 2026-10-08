@@ -9,7 +9,6 @@ import {
   deleteUser,
   updateUserProfile,
   getUserById,
-  verificationLink,
 } from '../controllers/userController.js'
 import { protect, admin } from '../middleware/authMiddleware.js'
 

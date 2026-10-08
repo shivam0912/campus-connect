@@ -41,7 +41,7 @@ const getProductById = asyncHandler(async (req, res) => {
 const deleteProduct = asyncHandler(async (req, res) => {
   const product = await Product.findById(req.params.id)
   if (product) {
-    await product.remove()
+    await product.deleteOne()
     res.json({ message: 'Product removed' })
   } else {
     res.status(404)
@@ -51,7 +51,6 @@ const deleteProduct = asyncHandler(async (req, res) => {
 
 //upload products by logged in user
 const createProduct = asyncHandler(async (req, res) => {
-  console.log('create prouduct')
   const {
     name,
     images,
@@ -178,7 +177,6 @@ const updateProduct = asyncHandler(async (req, res) => {
 
 const reviewProduct = asyncHandler(async (req, res) => {
   const { comment } = req.body
-  console.log(req.body)
   const review = {
     name: req.user.name,
     comment,

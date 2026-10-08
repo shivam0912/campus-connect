@@ -4,7 +4,6 @@ import asyncHandler from 'express-async-handler'
 
 const protect = asyncHandler(async (req, res, next) => {
   let token
-  console.log(req.headers.authorization)
   if (
     req.headers.authorization &&
     req.headers.authorization.startsWith('Bearer')
@@ -15,7 +14,10 @@ const protect = asyncHandler(async (req, res, next) => {
 
       //here all information except password of user has been set to req.user that is decoded from token
       req.user = await User.findById(decoded.id).select('-password')
-      console.log(req.user)
+      if (!req.user) {
+        res.status(401)
+        throw new Error('User no longer exists')
+      }
       next()
     } catch (error) {
       console.error(error)

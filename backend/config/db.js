@@ -1,20 +1,23 @@
 import mongoose from 'mongoose'
 import 'dotenv/config'
 
+let connectionPromise
+
 const connectDB = async () => {
-  try {
-    const conn = await mongoose.connect(process.env.MONGO_URI, {
-      useUnifiedTopology: true,
-      useNewUrlParser: true,
-      serverSelectionTimeoutMS: 5000, // Timeout for server selection
-      socketTimeoutMS: 45000, // Timeout for sockets
-      retryWrites: true // Enable retryable writes
-    })
-    console.log(`MongoDB connected: ${conn.connection.host}`)
-  } catch (err) {
-    console.error('Error connecting to MongoDB:', err)
-    process.exit(1)
-  }
+  if (mongoose.connection.readyState === 1) return mongoose.connection
+  if (!process.env.MONGO_URI) throw new Error('MONGO_URI is not configured')
+
+  connectionPromise ??= mongoose.connect(process.env.MONGO_URI, {
+    serverSelectionTimeoutMS: 5000,
+    socketTimeoutMS: 45000,
+    retryWrites: true,
+  }).catch((error) => {
+    connectionPromise = undefined
+    throw error
+  })
+
+  const connection = await connectionPromise
+  return connection.connection
 }
 
 export default connectDB

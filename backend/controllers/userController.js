@@ -1,7 +1,6 @@
 import asyncHandler from 'express-async-handler';
 import User from '../models/userModel.js';
 import dotenv from 'dotenv';
-import jwt from 'jsonwebtoken';
 import nodemailer from 'nodemailer'; 
 import generateToken from '../utils/generateToken.js';
 
@@ -45,84 +44,31 @@ const getUserProfile = asyncHandler(async (req, res) => {
   }
 });
 
-const verificationLink = asyncHandler(async (req, res) => {
-  const { name, email, password, contact, address } = req.body;
-  const { phone_no } = contact;
-  const userExists = await User.findOne({ email });
-
-  if (userExists) {
-    res.status(400);
-    throw new Error('Email is already registered');
-  }
-
-  const validatename = name.length;
-  const validateaddress = address.length;
-  const validatePassword = password.length;
-
-  if (validatename < 3) {
-    res.status(400);
-    throw new Error('Name must be of 3 characters or more length ');
-  }
-
-  if (validateaddress < 5) {
-    res.status(400);
-    throw new Error('Address must be of 5 characters or more length ');
-  }
-  if (validatePassword < 6) {
-    res.status(400);
-    throw new Error('Password length must be greater than 5');
-  }
-
-  const validateContact = contact.phone_no.length;
-  if (validateContact !== 10) {
-   
-    res.status(400);
-    throw new Error('Enter 10 digit mobile number');
-  }
-
-  if (!phone_no.startsWith('8')) {
-    res.status(400);
-    throw new Error('Mobile Number must start with 8');
-  }
-  const tokengenerate = jwt.sign(
-    { name, email, password, contact, address },
-    process.env.JWT_SECRET,
-    { expiresIn: '10m' }
-  );
-
-  const transporter = nodemailer.createTransport({
-    service: 'gmail',
-    auth: {
-      user: process.env.USER1,
-      pass: process.env.PASSWORD,
-    },
-  });
-
-  const mailOptions = {
-    from: process.env.USER1,
-    to: email,
-    subject: 'Verify your account',
-    html: `<p>Please click on the link below to activate your account</p>
-    <a href="${process.env.EMAIL_URL}/verify/${tokengenerate}">${process.env.EMAIL_URL}/verify/${tokengenerate}</a>`,
-  };
-
-  transporter.sendMail(mailOptions, function (error, info) {
-    if (error) {
-      res.status(400);
-      console.log('error occurred');
-      throw new Error(error);
-    } else {
-      console.log('Email sent: ' + info.response);
-      res.status(201).json({
-        response:
-          'A verification link has been sent to your Email. Verify it at first.',
-      });
-    }
-  });
-});
-
 const registerUser = asyncHandler(async (req, res) => {
   const { name, email, password, contact, address } = req.body;
+  const phoneNumber = contact?.phone_no;
+
+  if (!name || name.trim().length < 3) {
+    res.status(400);
+    throw new Error('Name must contain at least 3 characters');
+  }
+  if (!email || !/^\S+@\S+\.\S+$/.test(email)) {
+    res.status(400);
+    throw new Error('Enter a valid email address');
+  }
+  if (!password || password.length < 8) {
+    res.status(400);
+    throw new Error('Password must contain at least 8 characters');
+  }
+  if (!address || address.trim().length < 5) {
+    res.status(400);
+    throw new Error('Address must contain at least 5 characters');
+  }
+  if (!/^\d{10}$/.test(phoneNumber ?? '')) {
+    res.status(400);
+    throw new Error('Enter a valid 10-digit mobile number');
+  }
+
   const userExists = await User.findOne({ email });
 
   if (userExists) {
@@ -157,26 +103,37 @@ const registerUser = asyncHandler(async (req, res) => {
 
 const emailSend = asyncHandler(async (req, res) => {
   const { receiver, text, name, address, productName, email, phone_no } = req.body;
-  console.log('user is', email);
+  const emailUser = process.env.EMAIL_USER ?? process.env.USER1;
+  const emailPassword = process.env.EMAIL_PASSWORD ?? process.env.PASSWORD;
+
+  if (!emailUser || !emailPassword) {
+    res.status(503);
+    throw new Error('Email delivery is not configured');
+  }
+
+  const escapeHtml = (value = '') => String(value)
+    .replaceAll('&', '&amp;')
+    .replaceAll('<', '&lt;')
+    .replaceAll('>', '&gt;')
+    .replaceAll('"', '&quot;')
+    .replaceAll("'", '&#039;');
 
   const transporter = nodemailer.createTransport({
     service: 'gmail',
     auth: {
-      user: process.env.USER1,
-      pass: process.env.PASSWORD,
+      user: emailUser,
+      pass: emailPassword,
     },
   });
 
   const mailOptions = {
-    from: process.env.USER1,
+    from: emailUser,
     to: receiver,
     subject: 'You have a buyer',
-    html: `<div style="background:#31686e;text-align:center;color:white">One of the KinBechSaman.com user wants
-    to buy your ${productName}. </div><br/>
-    <p>His/Her name is ${name} and is a resident of ${address}.His/Her
-    email is: ${email} and registered contact no is: ${phone_no}.</p>
-
-    He/She says:  ${text}`,
+    html: `<p>A Campus Connect user is interested in ${escapeHtml(productName)}.</p>
+    <p>Name: ${escapeHtml(name)}<br/>Address: ${escapeHtml(address)}<br/>
+    Email: ${escapeHtml(email)}<br/>Contact: ${escapeHtml(phone_no)}</p>
+    <p>Message: ${escapeHtml(text)}</p>`,
   };
 
   transporter.sendMail(mailOptions, function (error, info) {
@@ -184,7 +141,6 @@ const emailSend = asyncHandler(async (req, res) => {
       res.status(400);
       throw new Error(error);
     } else {
-      console.log('Email sent: ' + info.response);
       res.status(201).json({ response: 'Email Successfully Sent' });
     }
   });
@@ -198,7 +154,7 @@ const getUsers = asyncHandler(async (req, res) => {
 const deleteUser = asyncHandler(async (req, res) => {
   const user = await User.findById(req.params.id);
   if (user) {
-    await user.remove();
+    await user.deleteOne();
     res.json({ message: 'User removed' });
   } else {
     res.status(404);
@@ -259,5 +215,4 @@ export {
   deleteUser,
   updateUserProfile,
   getUserById,
-  verificationLink,
 };
