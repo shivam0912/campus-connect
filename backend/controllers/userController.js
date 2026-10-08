@@ -1,5 +1,6 @@
 import asyncHandler from 'express-async-handler';
 import User from '../models/userModel.js';
+import Product from '../models/productModel.js';
 import dotenv from 'dotenv';
 import nodemailer from 'nodemailer'; 
 import generateToken from '../utils/generateToken.js';
@@ -102,9 +103,20 @@ const registerUser = asyncHandler(async (req, res) => {
 });
 
 const emailSend = asyncHandler(async (req, res) => {
-  const { receiver, text, name, address, productName, email, phone_no } = req.body;
+  const { productId, text } = req.body;
   const emailUser = process.env.EMAIL_USER ?? process.env.USER1;
   const emailPassword = process.env.EMAIL_PASSWORD ?? process.env.PASSWORD;
+
+  if (!productId || !text?.trim() || text.length > 2000) {
+    res.status(400);
+    throw new Error('A product and a message of up to 2000 characters are required');
+  }
+
+  const product = await Product.findById(productId);
+  if (!product) {
+    res.status(404);
+    throw new Error('Product not found');
+  }
 
   if (!emailUser || !emailPassword) {
     res.status(503);
@@ -128,22 +140,16 @@ const emailSend = asyncHandler(async (req, res) => {
 
   const mailOptions = {
     from: emailUser,
-    to: receiver,
+    to: product.seller.selleremail,
     subject: 'You have a buyer',
-    html: `<p>A Campus Connect user is interested in ${escapeHtml(productName)}.</p>
-    <p>Name: ${escapeHtml(name)}<br/>Address: ${escapeHtml(address)}<br/>
-    Email: ${escapeHtml(email)}<br/>Contact: ${escapeHtml(phone_no)}</p>
+    html: `<p>A Campus Connect user is interested in ${escapeHtml(product.name)}.</p>
+    <p>Name: ${escapeHtml(req.user.name)}<br/>Address: ${escapeHtml(req.user.address)}<br/>
+    Email: ${escapeHtml(req.user.email)}<br/>Contact: ${escapeHtml(req.user.contact?.phone_no)}</p>
     <p>Message: ${escapeHtml(text)}</p>`,
   };
 
-  transporter.sendMail(mailOptions, function (error, info) {
-    if (error) {
-      res.status(400);
-      throw new Error(error);
-    } else {
-      res.status(201).json({ response: 'Email Successfully Sent' });
-    }
-  });
+  await transporter.sendMail(mailOptions);
+  res.status(201).json({ response: 'Email Successfully Sent' });
 });
 
 const getUsers = asyncHandler(async (req, res) => {

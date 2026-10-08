@@ -1,6 +1,8 @@
 import asyncHandler from 'express-async-handler'
 import Product from '../models/productModel.js'
 
+const publicProductFields = '-seller.selleremail -seller.selleraddress -seller.phoneNo.mobile'
+
 const getProducts = asyncHandler(async (req, res) => {
   const pageSize = 6
   const page = Number(req.query.pageNumber) || 1
@@ -15,6 +17,7 @@ const getProducts = asyncHandler(async (req, res) => {
 
   const count = await Product.countDocuments({ ...keyword })
   const products = await Product.find({ ...keyword })
+    .select(publicProductFields)
     .sort({ createdAt: -1 }) // Sort products by createdAt descending
     .limit(pageSize)
     .skip(pageSize * (page - 1))
@@ -28,12 +31,22 @@ const getProducts = asyncHandler(async (req, res) => {
 
 
 const getProductById = asyncHandler(async (req, res) => {
-  const product = await Product.findById(req.params.id)
+  const product = await Product.findById(req.params.id).select(publicProductFields)
   if (product) {
     res.json(product)
   } else {
     res.status(400).json({ message: 'No product found' })
   }
+})
+
+const getProductContact = asyncHandler(async (req, res) => {
+  const product = await Product.findById(req.params.id)
+  if (!product) {
+    res.status(404)
+    throw new Error('Product not found')
+  }
+
+  res.json({ email: product.seller.selleremail })
 })
 
 //delete product by admin
@@ -193,6 +206,7 @@ const reviewProduct = asyncHandler(async (req, res) => {
 export {
   getProducts,
   getProductById,
+  getProductContact,
   deleteProduct,
   createProduct,
   updateProduct,

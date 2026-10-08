@@ -157,15 +157,7 @@ export const register = (token) => async (dispatch) => {
 }
 
 // Send email
-export const sendEmail = (
-  receiver,
-  text,
-  name,
-  address,
-  productName,
-  email,
-  phone_no
-) => async (dispatch, getState) => {
+export const sendEmail = (productId, text) => async (dispatch, getState) => {
   try {
     dispatch({
       type: EMAIL_SEND_REQUEST,
@@ -182,7 +174,7 @@ export const sendEmail = (
 
     const { data } = await axios.post(
       `${API_URL}/api/users/email`,
-      { receiver, text, name, address, productName, email, phone_no },
+      { productId, text },
       config
     )
     dispatch({

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import Meta from '../components/Meta';
 import { Row, Col, Image, ListGroup, Button, Form } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
@@ -6,8 +7,6 @@ import { Link } from 'react-router-dom';
 import Message from '../components/Message';
 import Loader from '../components/Loader';
 import Carousel from 'react-bootstrap/Carousel';
-import emailjs from 'emailjs-com';
-import logo from './gmail.png'
 import '../App.css'
 import {
   listProductDetails,
@@ -15,9 +14,9 @@ import {
 } from '../actions/productActions';
 import { sendEmail } from '../actions/userActions';
 import { PRODUCT_REVIEW_RESET } from '../types/productConstants';
-import { ContactUs } from './ContactUs';
 
 const ProductScreen = ({ match, history }) => {
+  const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000';
   const [text, setText] = useState('');
   const [comment, setComment] = useState('');
   const [sendMail, setSendMail] = useState(false);
@@ -64,15 +63,7 @@ const ProductScreen = ({ match, history }) => {
     setEmailSent(true);
 
     dispatch(
-      sendEmail(
-        product?.seller?.selleremail,
-        text,
-        userData?.name,
-        userData?.address,
-        product?.name,
-        userData?.email,
-        userData?.contact?.phone_no
-      )
+      sendEmail(product?._id, text)
     );
 
     setText('');
@@ -88,14 +79,22 @@ const ProductScreen = ({ match, history }) => {
   const cancelHandler = () => {
     setSendMail(false);
   };
-  const sendEMAIL = () => {
-    const sellerEmail = product?.seller?.selleremail;
-    if (sellerEmail) {
+  const openContactForm = async () => {
+    if (!userData) {
+      setSendMail(true);
+      return;
+    }
+
+    try {
+      const { data } = await axios.get(
+        `${API_URL}/api/products/${product._id}/contact`,
+        { headers: { Authorization: `Bearer ${userData.token}` } }
+      );
       const subject = `Regarding ${product.name}`;
-      const body = `Hello, \n\nI'm interested in your product "${product.name}". Please provide more information.\n\nRegards,\n${userData?.name}`;
-      window.location.href = `mailto:${sellerEmail}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-    } else {
-      console.error("Seller's email not found.");
+      const body = `Hello,\n\nI'm interested in your product "${product.name}". Please provide more information.\n\nRegards,\n${userData.name}`;
+      window.location.href = `mailto:${data.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    } catch (contactError) {
+      setSendMail(true);
     }
   };
   
@@ -236,9 +235,7 @@ const ProductScreen = ({ match, history }) => {
                 <Col className='product' md={4} sm={2} xs={2}>
                   <ul>
                     <li> Name:</li>
-                    <li> Email:</li>
-                    <li> Address:</li>
-                    <li>Phone:</li>
+                    <li>Contact:</li>
                     <li>Contact Seller</li>
                     <li></li>
                   </ul>
@@ -247,33 +244,10 @@ const ProductScreen = ({ match, history }) => {
                   <ul>
                     <li>{product?.seller?.sellername}</li>
 
+                    <li>Seller details stay private until they reply.</li>
                     <li>
-                      <span>
-                        {product?.seller?.selleremail}
-                        {/* Remove the send email button */}
-                      </span>
+                      <Button onClick={openContactForm}>Contact seller securely</Button>
                     </li>
-                    <li>{product?.seller?.selleraddress}</li>
-                    <li>
-                      {product?.seller?.phoneNo?.mobile}{' '}
-                      <span>
-                        {product?.seller?.phoneNo?.isVerified ? (
-                          <span>
-                            <i className='fas fa-mobile-alt'></i>
-                            <span className='underlined'></span>
-                          </span>
-                        ) : (
-                          <span>
-                            <i className='fas fa-mobile-alt'></i>
-                            <span className='underlined'></span>
-                          </span>
-                        )}{' '}
-                      </span>
-                    </li>
-                   <li style={{backgroundColor:'none'}}>
-                    <Button onClick={sendEMAIL} className="logo-button" >
-                    <img src={logo} alt="Logo" className="logo-img1" /></Button>
-</li>
                   </ul>
                 </Col>
               </Row>
